@@ -10,21 +10,35 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Backend') {
             steps {
-                bat 'npm install'
+                dir('backend') {
+                    bat 'npm install'
+                }
             }
         }
 
-        stage('Test') {
+        stage('Install Frontend') {
             steps {
-                bat 'npm test'
+                dir('frontend') {
+                    bat 'npm install'
+                }
             }
         }
 
-        stage('Build') {
+        stage('Lint Frontend') {
             steps {
-                bat 'npm run build'
+                dir('frontend') {
+                    bat 'npm run lint'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    bat 'npm run build'
+                }
             }
         }
     }
